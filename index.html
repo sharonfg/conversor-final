@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversor de Divisas Profesional</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="background-animation"></div>
+    
+    <div class="container">
+        <!-- Header con logo y título -->
+        <header class="header">
+            <div class="logo">
+                <i class="fas fa-globe-americas"></i>
+                <h1>Conversor<span>Divisas</span></h1>
+            </div>
+            <p class="tagline">
+                <i class="fas fa-bolt"></i> Conversiones en tiempo real con tasas actualizadas
+            </p>
+        </header>
+
+        <!-- Tarjeta principal del conversor -->
+        <main class="converter-card">
+            <div class="card-header">
+                <h2><i class="fas fa-calculator"></i> Convertir Divisas</h2>
+                <p class="card-subtitle">Selecciona las monedas y la cantidad a convertir</p>
+            </div>
+
+            <!-- Sección de entrada -->
+            <div class="input-section">
+                <!-- Cantidad -->
+                <div class="form-group">
+                    <label for="amount" class="form-label">
+                        <i class="fas fa-money-bill-wave"></i> Cantidad a Convertir
+                    </label>
+                    <div class="input-with-icon">
+                        <input type="number" id="amount" class="form-input" 
+                               placeholder="Ej: 1000" min="0" step="0.01" value="100">
+                        <span class="input-icon">$</span>
+                    </div>
+                    <div class="error-message" id="amount-error"></div>
+                </div>
+
+                <!-- Selectores de divisas -->
+                <div class="currency-selectors">
+                    <!-- Divisa origen -->
+                    <div class="currency-selector">
+                        <label for="from-currency" class="form-label">
+                            <i class="fas fa-arrow-up"></i> Moneda Origen
+                        </label>
+                        <div class="custom-select">
+                            <select id="from-currency" class="form-select">
+                                <option value="USD">🇺🇸 USD - Dólar Estadounidense</option>
+                                <option value="EUR">🇪🇺 EUR - Euro</option>
+                                <option value="MXN">🇲🇽 MXN - Peso Mexicano</option>
+                                <option value="COP">🇨🇴 COP - Peso Colombiano</option>
+                                <option value="ARS">🇦🇷 ARS - Peso Argentino</option>
+                                <option value="BRL">🇧🇷 BRL - Real Brasileño</option>
+                                <option value="CLP">🇨🇱 CLP - Peso Chileno</option>
+                                <option value="PEN">🇵🇪 PEN - Sol Peruano</option>
+                            </select>
+                            <div class="select-arrow">
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Botón de intercambio -->
+                    <div class="swap-container">
+                        <button id="swap-currencies" class="swap-btn" title="Intercambiar divisas">
+                            <i class="fas fa-exchange-alt"></i>
+                        </button>
+                    </div>
+
+                    <!-- Divisa destino -->
+                    <div class="currency-selector">
+                        <label for="to-currency" class="form-label">
+                            <i class="fas fa-arrow-down"></i> Moneda Destino
+                        </label>
+                        <div class="custom-select">
+                            <select id="to-currency" class="form-select">
+                                <option value="MXN">🇲🇽 MXN - Peso Mexicano</option>
+                                <option value="USD">🇺🇸 USD - Dólar Estadounidense</option>
+                                <option value="EUR">🇪🇺 EUR - Euro</option>
+                                <option value="COP">🇨🇴 COP - Peso Colombiano</option>
+                                <option value="ARS">🇦🇷 ARS - Peso Argentino</option>
+                                <option value="BRL">🇧🇷 BRL - Real Brasileño</option>
+                                <option value="CLP">🇨🇱 CLP - Peso Chileno</option>
+                                <option value="PEN">🇵🇪 PEN - Sol Peruano</option>
+                            </select>
+                            <div class="select-arrow">
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Botón de conversión -->
+                <button id="convert-btn" class="convert-btn">
+                    <i class="fas fa-sync-alt"></i> Convertir Ahora
+                </button>
+            </div>
+
+            <!-- Resultado de la conversión -->
+            <div class="result-section hidden" id="result-section">
+                <div class="result-card">
+                    <div class="result-header">
+                        <h3><i class="fas fa-chart-line"></i> Resultado de la Conversión</h3>
+                        <div class="result-badge">
+                            <i class="fas fa-check-circle"></i> Convertido
+                        </div>
+                    </div>
+                    
+                    <div class="result-display">
+                        <div class="original-amount">
+                            <div class="currency-flag usd"></div>
+                            <div class="amount-details">
+                                <span class="amount" id="original-amount">100.00</span>
+                                <span class="currency-code" id="original-currency">USD</span>
+                            </div>
+                        </div>
+                        
+                        <div class="conversion-arrow">
+                            <i class="fas fa-long-arrow-alt-right"></i>
+                        </div>
+                        
+                        <div class="converted-amount">
+                            <div class="currency-flag mxn"></div>
+                            <div class="amount-details">
+                                <span class="amount highlighted" id="converted-amount">1,680.50</span>
+                                <span class="currency-code" id="converted-currency">MXN</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="rate-info">
+                        <div class="rate-item">
+                            <i class="fas fa-percentage"></i>
+                            <span>Tasa de cambio:</span>
+                            <strong id="rate-value">1 USD = 16.8050 MXN</strong>
+                        </div>
+                        <div class="rate-item">
+                            <i class="far fa-clock"></i>
+                            <span>Actualizado:</span>
+                            <strong id="update-time">Hoy, 10:30 AM</strong>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="action-buttons">
+                    <button class="action-btn secondary">
+                        <i class="far fa-copy"></i> Copiar Resultado
+                    </button>
+                    <button class="action-btn secondary">
+                        <i class="fas fa-history"></i> Nuevo Cálculo
+                    </button>
+                </div>
+            </div>
+
+            <!-- Loading spinner -->
+            <div class="loading hidden" id="loading">
+                <div class="spinner-container">
+                    <div class="spinner"></div>
+                    <p>Obteniendo tasas actualizadas...</p>
+                </div>
+            </div>
+        </main>
+
+        <!-- Panel de tasas populares -->
+        <section class="rates-panel">
+            <div class="panel-header">
+                <h3><i class="fas fa-fire"></i> Tasas Populares Hoy</h3>
+                <div class="refresh-badge">
+                    <i class="fas fa-redo"></i> Actualiza cada 5 min
+                </div>
+            </div>
+            
+            <div class="rates-grid" id="rates-grid">
+                <!-- Las tasas se cargarán dinámicamente -->
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <i class="fas fa-university"></i>
+                    <span>Currency<span>Pro</span></span>
+                </div>
+                
+                <div class="footer-info">
+                    <p>
+                        <i class="fas fa-database"></i>
+                        <strong>Powered by CurrencyFreaks API</strong> - Tasas en tiempo real
+                    </p>
+                    <p class="disclaimer">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        Tasas indicativas para fines informativos. Las tasas reales pueden variar.
+                    </p>
+                    <p class="api-info">
+                        <i class="fas fa-bolt"></i>
+                        Actualización: Cada 5 minutos | Límite: 1,000 solicitudes/mes
+                    </p>
+                </div>
+                
+                <div class="footer-bottom">
+                    <p>© 2024 Conversor de Divisas | Proyecto Académico | Todos los derechos reservados</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/config.js"></script>
+    <script src="js/script-enhanced.js"></script>
+    
+    <script>
+        // Script de inicialización
+        console.log('🚀 Conversor de Divisas Profesional - Cargado exitosamente');
+    </script>
+</body>
+</html>
